@@ -10,7 +10,7 @@ export interface Post {
 interface ApiResponse<T> {
   data: T | [];
   loading: boolean;
-  error: Error | null;
+  newError: Error | null;
 }
 
 export function useFetch<T = Post[]>(url: string): ApiResponse<T> {
@@ -18,38 +18,37 @@ export function useFetch<T = Post[]>(url: string): ApiResponse<T> {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
+  // Derive validation error synchronously during render (no cascading render)
+  const validationError = !url ? new Error('URL must be provided!') : null;
+  const newError = validationError ?? error;
+
   useEffect(() => {
     if (!url) {
-      setError(new Error('URL must be provided!'));
       return;
     }
 
     const controller = new AbortController();
 
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
         const response = await fetch(url, {
           signal: controller.signal,
         });
         if (!response.ok) {
-          throw new Error('Failed to fetch');
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result: T = await response.json();
         setData(result);
       } catch (error: unknown) {
-        if (error instanceof Error && error.name === 'AbortError') {
-          return;
-        }
-
-        if (error instanceof Error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
           setError(error);
-        } else {
-          setError(new Error('Something went wrong!'));
         }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -63,6 +62,6 @@ export function useFetch<T = Post[]>(url: string): ApiResponse<T> {
   return {
     data,
     loading,
-    error,
+    newError,
   };
 }

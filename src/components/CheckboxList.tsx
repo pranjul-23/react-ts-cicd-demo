@@ -1,15 +1,15 @@
 import { useMemo, type ChangeEvent, type ReactNode } from 'react';
 
 export interface Item {
-  id: String;
-  title: String;
+  id: string;
+  title: string;
 }
 
 interface CheckboxListProps<T> {
   items: T[];
   selectedItems: T[];
   onSelectItem: (item: T) => void;
-  onSelectAll: (checked: Boolean) => void;
+  onSelectAll: (checked: boolean) => void;
   renderItem: (item: T) => ReactNode;
   getItemKey: (item: T) => string;
 }

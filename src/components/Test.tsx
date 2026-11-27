@@ -7,11 +7,11 @@
 // import { getOptionLabel, getOptionKey } from "../utils/helper";
 // import FlatFormGridLayout from "./FlatFormGridLayout";
 // import FlexFluid from "./FlexFluid";
-// import TicTacToe from "./TicTacToe/TicTacToe";
+import TicTacToe from './TicTacToe/TicTacToe';
 // import VirtualizedList from "./VirtualizedList";
 // import CheckboxList from './CheckboxList';
 // import type { Item } from './CheckboxList';
-import { BookList } from './BookStore';
+// import { BookList } from './BookStore';
 
 // const items = Array.from({ length: 100 }, (_, index) => `Item ${index + 1}`);
 
@@ -103,7 +103,7 @@ function Test() {
       <div className="mt-10">
         <FlexFluid />
       </div> */}
-      {/* <TicTacToe /> */}
+      <TicTacToe />
 
       {/* <VirtualizedList items={items} /> */}
 
@@ -116,7 +116,7 @@ function Test() {
         getItemKey={getItemKey}
       /> */}
 
-      <BookList />
+      {/* <BookList /> */}
     </>
   );
 }

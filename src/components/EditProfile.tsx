@@ -1,25 +1,6 @@
 import { useActionState } from 'react';
 import { SubmitButton } from './SubmitButton';
-
-type ActionState = { error?: string; success?: boolean };
-// type Flag = true | false;
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export async function updateEditProfile(
-  _prevState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  const username = formData.get('username') as string;
-
-  if (!username || username.length < 3) {
-    return { error: 'User name must be at least 3 chars.' };
-  }
-
-  await wait(500);
-
-  return { success: true };
-}
+import { updateEditProfile } from '../actions/actions';
 
 export default function EditProfile() {
   const [state, formAction, isPending] = useActionState(updateEditProfile, {});

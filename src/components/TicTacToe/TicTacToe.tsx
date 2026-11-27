@@ -24,7 +24,7 @@ export default function TicTacToe() {
   const [isXTurn, setIsXTurn] = useState<boolean>(true);
 
   const checkWinner = (board: BoardState): WinningInfo | null => {
-    for (let [a, b, c] of WINNING_COMBINATION) {
+    for (const [a, b, c] of WINNING_COMBINATION) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         return { winner: board[a] as PlayerType };
       }

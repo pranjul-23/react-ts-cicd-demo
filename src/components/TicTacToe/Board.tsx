@@ -14,6 +14,7 @@ export default function Board({ board, onCellClick }: BoardType) {
     >
       {board.map((value, index) => (
         <div
+          key={index}
           style={{
             width: '50px',
             height: '50px',
